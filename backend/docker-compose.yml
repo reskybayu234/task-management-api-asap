@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: "mysql2" # Host database yang sesuai dengan nama service MySQL di Docker Compose
+      DB_USER: "root"
+      DB_PASSWORD: "your_mysql_password_here"
+      DB_NAME: "task_management"
+    ports:
+      - "4000:4000" # Memetakan port container ke host
+    networks:
+      - backend-network
+
+  mysql2:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "your_mysql_password_here"
+      MYSQL_DATABASE: "task_management"
+    ports:
+      - "3306:3306" # Memetakan port MySQL ke host
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge

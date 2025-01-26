@@ -1,0 +1,19 @@
+FROM node:20-alpine
+
+# Menentukan working directory di dalam container
+WORKDIR ./app
+
+# Menyalin package.json dan package-lock.json untuk menginstall dependencies
+COPY package*.json ./
+
+# Menginstall dependencies
+RUN npm install
+
+# Menyalin seluruh isi project ke dalam working directory di container
+COPY . .
+
+# Expose port 4000 agar GraphQL API bisa diakses
+EXPOSE 4000
+
+# Menjalankan server saat container dijalankan
+CMD ["node", "app.js"]
